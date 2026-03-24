@@ -13,13 +13,13 @@ else
   echo "✔ .claude/rules/vue3-devextreme/ not found, skipped"
 fi
 
-# 2. Remove skill file
-SKILL_FILE="$TARGET_DIR/.claude/skills/vue3-devextreme.md"
-if [ -f "$SKILL_FILE" ]; then
-  rm -f "$SKILL_FILE"
-  echo "✔ .claude/skills/vue3-devextreme.md removed"
+# 2. Remove skill folder
+SKILL_DIR="$TARGET_DIR/.claude/skills/vue3-devextreme"
+if [ -d "$SKILL_DIR" ]; then
+  rm -rf "$SKILL_DIR"
+  echo "✔ .claude/skills/vue3-devextreme/ removed"
 else
-  echo "✔ .claude/skills/vue3-devextreme.md not found, skipped"
+  echo "✔ .claude/skills/vue3-devextreme/ not found, skipped"
 fi
 
 # 3. Remove lines from CLAUDE.md

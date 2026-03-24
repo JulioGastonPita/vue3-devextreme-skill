@@ -12,13 +12,13 @@ if (Test-Path $RulesDir) {
     Write-Host "OK .claude/rules/vue3-devextreme/ not found, skipped"
 }
 
-# 2. Remove skill file
-$SkillFile = Join-Path $TargetDir ".claude\skills\vue3-devextreme.md"
-if (Test-Path $SkillFile) {
-    Remove-Item -Force $SkillFile
-    Write-Host "OK .claude/skills/vue3-devextreme.md removed"
+# 2. Remove skill folder
+$SkillDir = Join-Path $TargetDir ".claude\skills\vue3-devextreme"
+if (Test-Path $SkillDir) {
+    Remove-Item -Recurse -Force $SkillDir
+    Write-Host "OK .claude/skills/vue3-devextreme/ removed"
 } else {
-    Write-Host "OK .claude/skills/vue3-devextreme.md not found, skipped"
+    Write-Host "OK .claude/skills/vue3-devextreme/ not found, skipped"
 }
 
 # 3. Remove lines from CLAUDE.md

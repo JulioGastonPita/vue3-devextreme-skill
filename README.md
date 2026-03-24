@@ -12,7 +12,7 @@ campos, tipos y relaciones sin que el desarrollador declare nada a mano.
 
 | Archivo | Propósito | Se carga |
 |---------|-----------|----------|
-| `.claude/skills/vue3-devextreme.md` | Generador de pantallas CRUD | Bajo demanda `/vue3-devextreme` |
+| `.claude/skills/vue3-devextreme/vue3-devextreme.md` | Generador de pantallas CRUD | Bajo demanda `/vue3-devextreme` |
 | `.claude/rules/vue3-devextreme/dx-components.md` | Componentes DX, imports, theming | Automático en cada sesión |
 | `.claude/rules/vue3-devextreme/state-and-data.md` | Pinia, TanStack Query, CustomStore | Automático en cada sesión |
 | `.claude/rules/vue3-devextreme/performance.md` | Optimizaciones DxDataGrid y Vue | Automático en cada sesión |
@@ -145,7 +145,8 @@ vue3-devextreme-skill/
 ├── uninstall.ps1
 └── .claude/
     ├── skills/
-    │   └── vue3-devextreme.md       ← invocable con /vue3-devextreme
+    │   └── vue3-devextreme/
+    │       └── vue3-devextreme.md   ← invocable con /vue3-devextreme
     └── rules/
         └── vue3-devextreme/         ← subcarpeta propia del skill
             ├── dx-components.md
