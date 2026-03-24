@@ -25,36 +25,65 @@ campos, tipos y relaciones sin que el desarrollador declare nada a mano.
 
 ### Opción A — npx degit (recomendada)
 
-Una sola línea, sin clonar el repo completo ni instalar nada:
+`degit` descarga únicamente el último snapshot sin historial git.
+No requiere tener git configurado en el proyecto destino.
 
+**macOS / Linux:**
 ```bash
 npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
 ```
 
-`degit` descarga únicamente el último snapshot sin historial git.
-No requiere tener git configurado en el proyecto destino.
+**Windows (PowerShell):**
+```powershell
+npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
+Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
+Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
+```
 
 ### Opción B — git clone
 
+**macOS / Linux:**
 ```bash
 git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
 cp -r /tmp/vue3-dx/.claude ./
 cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
 ```
 
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
+Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
+Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
+```
+
 ### Opción C — Submódulo Git (para equipos que quieran recibir actualizaciones)
 
+**macOS / Linux:**
 ```bash
 git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
 cp -r .vue3-dx-skill/.claude ./
 cp .vue3-dx-skill/CLAUDE.md ./CLAUDE.md
 ```
 
+**Windows (PowerShell):**
+```powershell
+git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
+Copy-Item -Recurse ".vue3-dx-skill\.claude" ".\"
+Copy-Item ".vue3-dx-skill\CLAUDE.md" ".\CLAUDE.md"
+```
+
 Para actualizar el skill en el futuro:
 
+**macOS / Linux:**
 ```bash
 git submodule update --remote .vue3-dx-skill
 cp -r .vue3-dx-skill/.claude ./
+```
+
+**Windows (PowerShell):**
+```powershell
+git submodule update --remote .vue3-dx-skill
+Copy-Item -Recurse ".vue3-dx-skill\.claude" ".\"
 ```
 
 ---
@@ -63,6 +92,7 @@ cp -r .vue3-dx-skill/.claude ./
 
 ### Proyecto nuevo desde cero
 
+**macOS / Linux:**
 ```bash
 # 1. Crear proyecto Vue 3
 npm create vue@latest mi-proyecto
@@ -73,6 +103,24 @@ npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
 
 # 3. Instalar el skill
 npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+
+# 4. Abrir Claude Code
+claude
+```
+
+**Windows (PowerShell):**
+```powershell
+# 1. Crear proyecto Vue 3
+npm create vue@latest mi-proyecto
+cd mi-proyecto
+
+# 2. Instalar dependencias del stack
+npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
+
+# 3. Instalar el skill
+npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
+Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
+Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
 
 # 4. Abrir Claude Code
 claude
