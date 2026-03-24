@@ -8,17 +8,30 @@ $TargetDir = (Get-Location).Path
 $ClaudeSource = Join-Path $ScriptDir ".claude"
 $ClaudeDest   = Join-Path $TargetDir ".claude"
 
+if (-Not (Test-Path $ClaudeSource)) {
+    Write-Error "Could not find .claude/ next to install.ps1. Make sure you downloaded the full skill package."
+    exit 1
+}
+
 if ($ClaudeSource -ne $ClaudeDest) {
     $null = New-Item -ItemType Directory -Force -Path $ClaudeDest
     Copy-Item -Recurse "$ClaudeSource\*" "$ClaudeDest\" -Force
     Write-Host "OK .claude/ copied"
 } else {
-    Write-Host "OK .claude/ already in place, skipped"
+    # Script is running from inside the project — files should already be present
+    $rulesOk = Test-Path (Join-Path $ClaudeDest "rules\vue3-devextreme")
+    $skillOk = Test-Path (Join-Path $ClaudeDest "skills\vue3-devextreme.md")
+    if ($rulesOk -and $skillOk) {
+        Write-Host "OK .claude/ already in place, skipped"
+    } else {
+        Write-Error ".claude/ exists but skill files are missing. Re-download the skill package and try again."
+        exit 1
+    }
 }
 
 # 2. Handle CLAUDE.md
 $ClaudeTarget = Join-Path $TargetDir "CLAUDE.md"
-$SkillMarker  = "@.claude/rules/dx-components.md"
+$SkillMarker  = "@.claude/rules/vue3-devextreme/dx-components.md"
 $AppendBlock  = @"
 
 ## Vue 3 + DevExtreme Rules

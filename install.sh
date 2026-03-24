@@ -1,27 +1,33 @@
 #!/usr/bin/env bash
 # vue3-devextreme-skill installer
-# Usage: bash install.sh (run from the root of your project)
+# Usage: bash /tmp/vue3-dx/install.sh (run from the root of your project)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$(pwd)"
 
 # 1. Copy .claude/ contents
-if [ "$SCRIPT_DIR/.claude" != "$TARGET_DIR/.claude" ]; then
+if [ ! -d "$SCRIPT_DIR/.claude" ]; then
+  echo "Error: could not find .claude/ next to install.sh. Make sure you downloaded the full skill package." >&2
+  exit 1
+fi
+
+if [ "$SCRIPT_DIR" != "$TARGET_DIR" ]; then
   mkdir -p "$TARGET_DIR/.claude"
   cp -r "$SCRIPT_DIR/.claude/." "$TARGET_DIR/.claude/"
   echo "✔ .claude/ copied"
 else
-  echo "✔ .claude/ already in place, skipped"
+  # Script is running from inside the project — files should already be present
+  if [ -d "$TARGET_DIR/.claude/rules/vue3-devextreme" ] && [ -f "$TARGET_DIR/.claude/skills/vue3-devextreme.md" ]; then
+    echo "✔ .claude/ already in place, skipped"
+  else
+    echo "Error: .claude/ exists but skill files are missing. Re-download the skill package and try again." >&2
+    exit 1
+  fi
 fi
 
 # 2. Handle CLAUDE.md
 CLAUDE_TARGET="$TARGET_DIR/CLAUDE.md"
-CLAUDE_LINES='@.claude/rules/dx-components.md
-@.claude/rules/state-and-data.md
-@.claude/rules/performance.md
-@.claude/rules/code-quality.md'
-
-SKILL_MARKER="@.claude/rules/dx-components.md"
+SKILL_MARKER="@.claude/rules/vue3-devextreme/dx-components.md"
 
 if [ ! -f "$CLAUDE_TARGET" ]; then
   cp "$SCRIPT_DIR/CLAUDE.md" "$CLAUDE_TARGET"
