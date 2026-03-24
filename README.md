@@ -167,6 +167,25 @@ monorepo/
 
 ---
 
+## Desinstalación
+
+**macOS / Linux:**
+```bash
+bash /tmp/vue3-dx/uninstall.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+& "$env:TEMP\vue3-dx\uninstall.ps1"
+```
+
+Los scripts eliminan:
+- `.claude/rules/vue3-devextreme/`
+- `.claude/skills/vue3-devextreme.md`
+- El bloque de rules en `CLAUDE.md` (el resto del archivo no se toca)
+
+---
+
 ## Estructura del repositorio
 
 ```
@@ -175,6 +194,8 @@ vue3-devextreme-skill/
 ├── CLAUDE.md
 ├── install.sh
 ├── install.ps1
+├── uninstall.sh
+├── uninstall.ps1
 └── .claude/
     ├── skills/
     │   └── vue3-devextreme.md       ← invocable con /vue3-devextreme
