@@ -5,15 +5,14 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$(pwd)"
 
-if [ "$SCRIPT_DIR" = "$TARGET_DIR" ]; then
-  echo "Error: run this script from your project directory, not from the skill directory." >&2
-  exit 1
-fi
-
 # 1. Copy .claude/ contents
-mkdir -p "$TARGET_DIR/.claude"
-cp -r "$SCRIPT_DIR/.claude/." "$TARGET_DIR/.claude/"
-echo "✔ .claude/ copied"
+if [ "$SCRIPT_DIR/.claude" != "$TARGET_DIR/.claude" ]; then
+  mkdir -p "$TARGET_DIR/.claude"
+  cp -r "$SCRIPT_DIR/.claude/." "$TARGET_DIR/.claude/"
+  echo "✔ .claude/ copied"
+else
+  echo "✔ .claude/ already in place, skipped"
+fi
 
 # 2. Handle CLAUDE.md
 CLAUDE_TARGET="$TARGET_DIR/CLAUDE.md"
