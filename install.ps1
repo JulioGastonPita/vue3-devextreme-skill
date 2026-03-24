@@ -1,11 +1,18 @@
 # vue3-devextreme-skill installer
-# Usage: .\install.ps1 (run from the root of your project)
+# Usage: & "$env:TEMP\vue3-dx\install.ps1" (run from the root of your project)
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetDir = (Get-Location).Path
 
-# 1. Copy .claude/ folder
-Copy-Item -Recurse "$ScriptDir\.claude" "$TargetDir\" -Force
+if ($ScriptDir -eq $TargetDir) {
+    Write-Error "Run this script from your project directory, not from the skill directory."
+    exit 1
+}
+
+# 1. Copy .claude/ contents
+$ClaudeDest = Join-Path $TargetDir ".claude"
+$null = New-Item -ItemType Directory -Force -Path $ClaudeDest
+Copy-Item -Recurse "$ScriptDir\.claude\*" "$ClaudeDest\" -Force
 Write-Host "OK .claude/ copied"
 
 # 2. Handle CLAUDE.md
