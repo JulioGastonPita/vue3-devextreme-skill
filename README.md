@@ -23,6 +23,9 @@ campos, tipos y relaciones sin que el desarrollador declare nada a mano.
 
 ## Instalación
 
+Los scripts de instalación son inteligentes: si tu proyecto **ya tiene un `CLAUDE.md`**,
+agregan las líneas necesarias al final sin sobreescribirlo. Si no existe, lo crean.
+
 ### Opción A — npx degit (recomendada)
 
 `degit` descarga únicamente el último snapshot sin historial git.
@@ -30,14 +33,16 @@ No requiere tener git configurado en el proyecto destino.
 
 **macOS / Linux:**
 ```bash
-npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
+cd /tu/proyecto
+bash /tmp/vue3-dx/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
 npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
-Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
+cd C:\tu\proyecto
+& "$env:TEMP\vue3-dx\install.ps1"
 ```
 
 ### Opción B — git clone
@@ -45,15 +50,15 @@ Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
 **macOS / Linux:**
 ```bash
 git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
-cp -r /tmp/vue3-dx/.claude ./
-cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+cd /tu/proyecto
+bash /tmp/vue3-dx/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
 git clone https://github.com/JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
-Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
+cd C:\tu\proyecto
+& "$env:TEMP\vue3-dx\install.ps1"
 ```
 
 ### Opción C — Submódulo Git (para equipos que quieran recibir actualizaciones)
@@ -61,15 +66,13 @@ Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
 **macOS / Linux:**
 ```bash
 git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
-cp -r .vue3-dx-skill/.claude ./
-cp .vue3-dx-skill/CLAUDE.md ./CLAUDE.md
+bash .vue3-dx-skill/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
 git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
-Copy-Item -Recurse ".vue3-dx-skill\.claude" ".\"
-Copy-Item ".vue3-dx-skill\CLAUDE.md" ".\CLAUDE.md"
+& ".vue3-dx-skill\install.ps1"
 ```
 
 Para actualizar el skill en el futuro:
@@ -77,45 +80,13 @@ Para actualizar el skill en el futuro:
 **macOS / Linux:**
 ```bash
 git submodule update --remote .vue3-dx-skill
-cp -r .vue3-dx-skill/.claude ./
+bash .vue3-dx-skill/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
 git submodule update --remote .vue3-dx-skill
-Copy-Item -Recurse ".vue3-dx-skill\.claude" ".\"
-```
-
----
-
-## ⚠️ Si tu proyecto ya tiene un CLAUDE.md
-
-Los comandos de instalación sobreescriben el `CLAUDE.md` existente.
-Si ya tenés uno, **no copies el archivo** — en su lugar agregá manualmente
-estas líneas al final de tu `CLAUDE.md`:
-
-```md
-## Vue 3 + DevExtreme Rules
-@.claude/rules/dx-components.md
-@.claude/rules/state-and-data.md
-@.claude/rules/performance.md
-@.claude/rules/code-quality.md
-
-## Invoke skill for new screens
-To generate a complete enterprise screen (Toolbar + Grid + CRUD popup):
-/vue3-devextreme
-```
-
-Solo necesitás copiar la carpeta `.claude/` (rules + skill), omitiendo el paso del `CLAUDE.md`:
-
-**macOS / Linux:**
-```bash
-cp -r /tmp/vue3-dx/.claude ./
-```
-
-**Windows (PowerShell):**
-```powershell
-Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
+& ".vue3-dx-skill\install.ps1"
 ```
 
 ---
@@ -134,7 +105,8 @@ cd mi-proyecto
 npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
 
 # 3. Instalar el skill
-npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
+bash /tmp/vue3-dx/install.sh
 
 # 4. Abrir Claude Code
 claude
@@ -151,8 +123,7 @@ npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
 
 # 3. Instalar el skill
 npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
-Copy-Item "$env:TEMP\vue3-dx\CLAUDE.md" ".\CLAUDE.md"
+& "$env:TEMP\vue3-dx\install.ps1"
 
 # 4. Abrir Claude Code
 claude
