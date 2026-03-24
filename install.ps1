@@ -1,35 +1,27 @@
 # vue3-devextreme-skill installer
-# Usage: & "$env:TEMP\vue3-dx\install.ps1" (run from the root of your project)
+# Usage: .\install.ps1 (run from the root of your project)
 
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetDir = (Get-Location).Path
+$TempDir   = Join-Path $env:TEMP "vue3-devextreme-skill"
 
-# 1. Copy .claude/ contents
-$ClaudeSource = Join-Path $ScriptDir ".claude"
-$ClaudeDest   = Join-Path $TargetDir ".claude"
-
-if (-Not (Test-Path $ClaudeSource)) {
-    Write-Error "Could not find .claude/ next to install.ps1. Make sure you downloaded the full skill package."
+# 1. Download skill files
+Write-Host "Downloading vue3-devextreme-skill..."
+if (Test-Path $TempDir) { Remove-Item -Recurse -Force $TempDir }
+npx --yes degit JulioGastonPita/vue3-devextreme-skill $TempDir
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "degit failed. Make sure Node.js is installed and you have internet access."
     exit 1
 }
+Write-Host "OK downloaded"
 
-if ($ClaudeSource -ne $ClaudeDest) {
-    $null = New-Item -ItemType Directory -Force -Path $ClaudeDest
-    Copy-Item -Recurse "$ClaudeSource\*" "$ClaudeDest\" -Force
-    Write-Host "OK .claude/ copied"
-} else {
-    # Script is running from inside the project — files should already be present
-    $rulesOk = Test-Path (Join-Path $ClaudeDest "rules\vue3-devextreme")
-    $skillOk = Test-Path (Join-Path $ClaudeDest "skills\vue3-devextreme.md")
-    if ($rulesOk -and $skillOk) {
-        Write-Host "OK .claude/ already in place, skipped"
-    } else {
-        Write-Error ".claude/ exists but skill files are missing. Re-download the skill package and try again."
-        exit 1
-    }
-}
+# 2. Copy .claude/ contents
+$ClaudeSource = Join-Path $TempDir ".claude"
+$ClaudeDest   = Join-Path $TargetDir ".claude"
+$null = New-Item -ItemType Directory -Force -Path $ClaudeDest
+Copy-Item -Recurse "$ClaudeSource\*" "$ClaudeDest\" -Force
+Write-Host "OK .claude/ copied"
 
-# 2. Handle CLAUDE.md
+# 3. Handle CLAUDE.md
 $ClaudeTarget = Join-Path $TargetDir "CLAUDE.md"
 $SkillMarker  = "@.claude/rules/vue3-devextreme/dx-components.md"
 $AppendBlock  = @"
@@ -46,7 +38,7 @@ To generate a complete enterprise screen (Toolbar + Grid + CRUD popup):
 "@
 
 if (-Not (Test-Path $ClaudeTarget)) {
-    Copy-Item "$ScriptDir\CLAUDE.md" $ClaudeTarget
+    Copy-Item "$TempDir\CLAUDE.md" $ClaudeTarget
     Write-Host "OK CLAUDE.md created"
 } else {
     $existing = Get-Content $ClaudeTarget -Raw
@@ -57,6 +49,9 @@ if (-Not (Test-Path $ClaudeTarget)) {
         Write-Host "OK vue3-devextreme rules appended to existing CLAUDE.md"
     }
 }
+
+# 4. Cleanup
+Remove-Item -Recurse -Force $TempDir
 
 Write-Host ""
 Write-Host "Installation complete. Run 'claude' to start."

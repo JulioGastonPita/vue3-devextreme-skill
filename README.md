@@ -23,71 +23,30 @@ campos, tipos y relaciones sin que el desarrollador declare nada a mano.
 
 ## Instalación
 
-Los scripts de instalación son inteligentes: si tu proyecto **ya tiene un `CLAUDE.md`**,
-agregan las líneas necesarias al final sin sobreescribirlo. Si no existe, lo crean.
+Los scripts descargan el skill automáticamente y lo instalan en el proyecto actual.
+Si ya tenés un `CLAUDE.md`, agregan las líneas al final sin sobreescribirlo.
 
-### Opción A — npx degit (recomendada)
-
-`degit` descarga únicamente el último snapshot sin historial git.
-No requiere tener git configurado en el proyecto destino.
-
-**macOS / Linux:**
-```bash
-npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
-cd /tu/proyecto
-bash /tmp/vue3-dx/install.sh
-```
+Descargá el script correspondiente a tu sistema, colocalo en la raíz de tu proyecto y ejecutalo:
 
 **Windows (PowerShell):**
 ```powershell
-npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-cd C:\tu\proyecto
-& "$env:TEMP\vue3-dx\install.ps1"
+# Descargar
+Invoke-WebRequest https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/install.ps1 -OutFile install.ps1
+# Ejecutar desde la raíz de tu proyecto
+.\install.ps1
 ```
-
-### Opción B — git clone
 
 **macOS / Linux:**
 ```bash
-git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
-cd /tu/proyecto
-bash /tmp/vue3-dx/install.sh
+curl -O https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/install.sh
+bash install.sh
 ```
 
-**Windows (PowerShell):**
-```powershell
-git clone https://github.com/JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-cd C:\tu\proyecto
-& "$env:TEMP\vue3-dx\install.ps1"
-```
-
-### Opción C — Submódulo Git (para equipos que quieran recibir actualizaciones)
-
-**macOS / Linux:**
-```bash
-git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
-bash .vue3-dx-skill/install.sh
-```
-
-**Windows (PowerShell):**
-```powershell
-git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
-& ".vue3-dx-skill\install.ps1"
-```
-
-Para actualizar el skill en el futuro:
-
-**macOS / Linux:**
-```bash
-git submodule update --remote .vue3-dx-skill
-bash .vue3-dx-skill/install.sh
-```
-
-**Windows (PowerShell):**
-```powershell
-git submodule update --remote .vue3-dx-skill
-& ".vue3-dx-skill\install.ps1"
-```
+El script hace todo solo:
+1. Descarga el skill con `degit`
+2. Copia `.claude/rules/vue3-devextreme/` y `.claude/skills/vue3-devextreme.md`
+3. Crea o actualiza `CLAUDE.md`
+4. Limpia los archivos temporales
 
 ---
 
@@ -97,35 +56,21 @@ git submodule update --remote .vue3-dx-skill
 
 **macOS / Linux:**
 ```bash
-# 1. Crear proyecto Vue 3
 npm create vue@latest mi-proyecto
 cd mi-proyecto
-
-# 2. Instalar dependencias del stack
 npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
-
-# 3. Instalar el skill
-npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
-bash /tmp/vue3-dx/install.sh
-
-# 4. Abrir Claude Code
+curl -O https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/install.sh
+bash install.sh
 claude
 ```
 
 **Windows (PowerShell):**
 ```powershell
-# 1. Crear proyecto Vue 3
 npm create vue@latest mi-proyecto
 cd mi-proyecto
-
-# 2. Instalar dependencias del stack
 npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
-
-# 3. Instalar el skill
-npx degit JulioGastonPita/vue3-devextreme-skill "$env:TEMP\vue3-dx"
-& "$env:TEMP\vue3-dx\install.ps1"
-
-# 4. Abrir Claude Code
+Invoke-WebRequest https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/install.ps1 -OutFile install.ps1
+.\install.ps1
 claude
 ```
 
@@ -169,14 +114,16 @@ monorepo/
 
 ## Desinstalación
 
-**macOS / Linux:**
-```bash
-bash /tmp/vue3-dx/uninstall.sh
-```
-
 **Windows (PowerShell):**
 ```powershell
-& "$env:TEMP\vue3-dx\uninstall.ps1"
+Invoke-WebRequest https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/uninstall.ps1 -OutFile uninstall.ps1
+.\uninstall.ps1
+```
+
+**macOS / Linux:**
+```bash
+curl -O https://raw.githubusercontent.com/JulioGastonPita/vue3-devextreme-skill/master/uninstall.sh
+bash uninstall.sh
 ```
 
 Los scripts eliminan:

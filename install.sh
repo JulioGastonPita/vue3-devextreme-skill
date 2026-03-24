@@ -1,36 +1,31 @@
 #!/usr/bin/env bash
 # vue3-devextreme-skill installer
-# Usage: bash /tmp/vue3-dx/install.sh (run from the root of your project)
+# Usage: bash install.sh (run from the root of your project)
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$(pwd)"
+TEMP_DIR="/tmp/vue3-devextreme-skill"
 
-# 1. Copy .claude/ contents
-if [ ! -d "$SCRIPT_DIR/.claude" ]; then
-  echo "Error: could not find .claude/ next to install.sh. Make sure you downloaded the full skill package." >&2
+# 1. Download skill files
+echo "Downloading vue3-devextreme-skill..."
+rm -rf "$TEMP_DIR"
+npx --yes degit JulioGastonPita/vue3-devextreme-skill "$TEMP_DIR"
+if [ $? -ne 0 ]; then
+  echo "Error: degit failed. Make sure Node.js is installed and you have internet access." >&2
   exit 1
 fi
+echo "✔ downloaded"
 
-if [ "$SCRIPT_DIR" != "$TARGET_DIR" ]; then
-  mkdir -p "$TARGET_DIR/.claude"
-  cp -r "$SCRIPT_DIR/.claude/." "$TARGET_DIR/.claude/"
-  echo "✔ .claude/ copied"
-else
-  # Script is running from inside the project — files should already be present
-  if [ -d "$TARGET_DIR/.claude/rules/vue3-devextreme" ] && [ -f "$TARGET_DIR/.claude/skills/vue3-devextreme.md" ]; then
-    echo "✔ .claude/ already in place, skipped"
-  else
-    echo "Error: .claude/ exists but skill files are missing. Re-download the skill package and try again." >&2
-    exit 1
-  fi
-fi
+# 2. Copy .claude/ contents
+mkdir -p "$TARGET_DIR/.claude"
+cp -r "$TEMP_DIR/.claude/." "$TARGET_DIR/.claude/"
+echo "✔ .claude/ copied"
 
-# 2. Handle CLAUDE.md
+# 3. Handle CLAUDE.md
 CLAUDE_TARGET="$TARGET_DIR/CLAUDE.md"
 SKILL_MARKER="@.claude/rules/vue3-devextreme/dx-components.md"
 
 if [ ! -f "$CLAUDE_TARGET" ]; then
-  cp "$SCRIPT_DIR/CLAUDE.md" "$CLAUDE_TARGET"
+  cp "$TEMP_DIR/CLAUDE.md" "$CLAUDE_TARGET"
   echo "✔ CLAUDE.md created"
 else
   if grep -qF "$SKILL_MARKER" "$CLAUDE_TARGET"; then
@@ -51,6 +46,9 @@ EOF
     echo "✔ vue3-devextreme rules appended to existing CLAUDE.md"
   fi
 fi
+
+# 4. Cleanup
+rm -rf "$TEMP_DIR"
 
 echo ""
 echo "Installation complete. Run 'claude' to start."
