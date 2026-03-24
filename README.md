@@ -23,36 +23,38 @@ campos, tipos y relaciones sin que el desarrollador declare nada a mano.
 
 ## Instalación
 
-### Opción A — Clonar y copiar (recomendada)
+### Opción A — npx degit (recomendada)
+
+Una sola línea, sin clonar el repo completo ni instalar nada:
 
 ```bash
-# Clonar el repositorio en un directorio temporal
-git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
+npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+```
 
-# Copiar el directorio .claude y el CLAUDE.md a tu proyecto
+`degit` descarga únicamente el último snapshot sin historial git.
+No requiere tener git configurado en el proyecto destino.
+
+### Opción B — git clone
+
+```bash
+git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
 cp -r /tmp/vue3-dx/.claude ./
 cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
 ```
 
-### Opción B — Submódulo Git
+### Opción C — Submódulo Git (para equipos que quieran recibir actualizaciones)
 
 ```bash
-# Agregar como submódulo (permite actualizar con git pull)
-git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .claude/skills/vue3-devextreme-skill
-
-# Luego copiar las rules y el CLAUDE.md
-cp .claude/skills/vue3-devextreme-skill/.claude/rules/* .claude/rules/
-cp .claude/skills/vue3-devextreme-skill/CLAUDE.md ./CLAUDE.md
+git submodule add https://github.com/JulioGastonPita/vue3-devextreme-skill .vue3-dx-skill
+cp -r .vue3-dx-skill/.claude ./
+cp .vue3-dx-skill/CLAUDE.md ./CLAUDE.md
 ```
 
-### Opción C — Descarga directa (sin git)
+Para actualizar el skill en el futuro:
 
 ```bash
-# Descargar el zip desde GitHub y extraer
-curl -L https://github.com/JulioGastonPita/vue3-devextreme-skill/archive/refs/heads/master.zip -o vue3-dx.zip
-unzip vue3-dx.zip
-cp -r vue3-devextreme-skill-master/.claude ./
-cp vue3-devextreme-skill-master/CLAUDE.md ./CLAUDE.md
+git submodule update --remote .vue3-dx-skill
+cp -r .vue3-dx-skill/.claude ./
 ```
 
 ---
@@ -69,10 +71,8 @@ cd mi-proyecto
 # 2. Instalar dependencias del stack
 npm install devextreme devextreme-vue pinia @tanstack/vue-query axios
 
-# 3. Instalar el skill (ver opciones arriba)
-git clone https://github.com/JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx
-cp -r /tmp/vue3-dx/.claude ./
-cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
+# 3. Instalar el skill
+npx degit JulioGastonPita/vue3-devextreme-skill /tmp/vue3-dx && cp -r /tmp/vue3-dx/.claude ./ && cp /tmp/vue3-dx/CLAUDE.md ./CLAUDE.md
 
 # 4. Abrir Claude Code
 claude
