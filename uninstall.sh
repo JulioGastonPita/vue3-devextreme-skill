@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # vue3-devextreme-skill uninstaller
-# Usage: bash /tmp/vue3-dx/uninstall.sh (run from the root of your project)
+# Usage: bash uninstall.sh (run from the root of your project)
 
 TARGET_DIR="$(pwd)"
 

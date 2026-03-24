@@ -1,5 +1,5 @@
 # vue3-devextreme-skill uninstaller
-# Usage: & "$env:TEMP\vue3-dx\uninstall.ps1" (run from the root of your project)
+# Usage: .\uninstall.ps1 (run from the root of your project)
 
 $TargetDir = (Get-Location).Path
 
