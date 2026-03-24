@@ -88,6 +88,38 @@ Copy-Item -Recurse ".vue3-dx-skill\.claude" ".\"
 
 ---
 
+## ⚠️ Si tu proyecto ya tiene un CLAUDE.md
+
+Los comandos de instalación sobreescriben el `CLAUDE.md` existente.
+Si ya tenés uno, **no copies el archivo** — en su lugar agregá manualmente
+estas líneas al final de tu `CLAUDE.md`:
+
+```md
+## Vue 3 + DevExtreme Rules
+@.claude/rules/dx-components.md
+@.claude/rules/state-and-data.md
+@.claude/rules/performance.md
+@.claude/rules/code-quality.md
+
+## Invoke skill for new screens
+To generate a complete enterprise screen (Toolbar + Grid + CRUD popup):
+/vue3-devextreme
+```
+
+Solo necesitás copiar la carpeta `.claude/` (rules + skill), omitiendo el paso del `CLAUDE.md`:
+
+**macOS / Linux:**
+```bash
+cp -r /tmp/vue3-dx/.claude ./
+```
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item -Recurse "$env:TEMP\vue3-dx\.claude" ".\"
+```
+
+---
+
 ## Uso rápido
 
 ### Proyecto nuevo desde cero
